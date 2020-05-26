@@ -20,7 +20,11 @@ var Router *gin.Engine
 	   "language": "语言",
        "limits": {
            "cpu": "1000", "//": "CPU时间限制 单位为ms. 用户进程将会在相当于2.25倍CPU时间限制的实际时间后被杀死.",
-           "memory": "", "//": "内存使用限制 单位为Byte 实际内存限制会是这里传入的2倍, 请在随后传回的内存用量中自行判断是否MLE",
+		   "memory": "", "//": "内存使用限制 单位为Byte 实际内存限制会是这里传入的2倍, 请在随后传回的内存用量中自行判断是否MLE",
+		   "core": "", "//": "Coredump大小限制 单位为Byte 为0则禁用coredump",
+		   "output": "", "//": "输出文件大小限制 单位为Byte",
+		   "processes": "", "//": "允许创建的进程数",
+		   "stack": "", "//": "堆栈大小 单位为Byte"
        },
        "data": [
            "",
@@ -37,8 +41,12 @@ type submitData struct {
 }
 
 type limits struct {
-	CPU    uint64 `form:"cpu" binding:"required" json:"cpu"`
-	Memory uint64 `form:"memory" binding:"required" json:"memory"`
+	CPU       uint64 `form:"cpu" binding:"required" json:"cpu"`
+	Memory    uint64 `form:"memory" binding:"required" json:"memory"`
+	Core      uint64 `form:"core" binding:"required" json:"core"`
+	Output    uint64 `form:"output" binding:"required" json:"output"`
+	Processes uint64 `form:"processes" binding:"required" json:"processes"`
+	Stack     uint64 `form:"stack" binding:"required" json:"stack"`
 }
 
 func init() {
